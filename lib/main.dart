@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterfshop/pages/index_page.dart';
+import 'package:flutterfshop/provide/cart/cart_provide.dart';
 import 'package:flutterfshop/provide/home/home_provide.dart';
 import 'package:flutterfshop/provide/home/message_provide.dart';
 import 'package:flutterfshop/provide/home/panic_buy_provide.dart';
@@ -27,6 +28,7 @@ void main(){
   var categoryProvide = CategoryProvide();
   var goodsProvide = GoodsProvide();
   var goodsInfoProvide = GoodsInfoProvide();
+  var cartProvide = CartProvide();
   var panicBuyProvide = PanicBuyProvide();
   
 
@@ -38,6 +40,7 @@ void main(){
   ..provide(Provider<CategoryProvide>.value(categoryProvide))
   ..provide(Provider<GoodsProvide>.value(goodsProvide))
   ..provide(Provider<GoodsInfoProvide>.value(goodsInfoProvide))
+  ..provide(Provider<CartProvide>.value(cartProvide))
   ..provide(Provider<HomeProvide>.value(homeProvide));
   runApp(ProviderNode(child: MyApp(), providers: providers));
 }

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutterfshop/config/service_url.dart';
+import 'package:flutterfshop/model/cart_model.dart';
 
 //购物车商品
 
 class GoodsItemPage extends StatelessWidget {
   final int index;
-
-  const GoodsItemPage({Key key, @required this.index}) : super(key: key);
+  final CartInfo cartInfo;
+  const GoodsItemPage({Key key, @required this.cartInfo, @required this.index}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,6 +28,7 @@ class GoodsItemPage extends StatelessWidget {
   }
 
   Widget _goodsItem(int index){
+    print(this.cartInfo.image);
     return Container(
       child: Row(
         children: <Widget>[
@@ -36,7 +39,8 @@ class GoodsItemPage extends StatelessWidget {
             },
           ),
           Image(
-            image: AssetImage("assets/images/maill/u281.png"),
+            //image: AssetImage("assets/images/maill/u281.png"),
+            image: NetworkImage(fileURL + this.cartInfo.image),
             width: ScreenUtil().setWidth(65),
             height: ScreenUtil().setHeight(65),
           ),
@@ -49,7 +53,7 @@ class GoodsItemPage extends StatelessWidget {
                 //名称
                 Container(
                   child: Text(
-                    "洛诗琳2020夏季新款印花雪纺连衣裙气质收腰V领抽绳古典法式女裙 付款15天后发货 花色 S",
+                    this.cartInfo.goodsName,
                     maxLines: 1,
 
                     overflow: TextOverflow.ellipsis,
@@ -91,7 +95,7 @@ class GoodsItemPage extends StatelessWidget {
                     children: <Widget>[
                       //价格
                       Text(
-                        "￥139.28",
+                        this.cartInfo.goodsPrice,
                         style: TextStyle(
                           fontSize: ScreenUtil().setSp(11),
                           color: Colors.red,
@@ -103,7 +107,7 @@ class GoodsItemPage extends StatelessWidget {
                       ),
                       //原始价格
                       Text(
-                        "￥339.28",
+                        this.cartInfo.goodsOldPrice,
                         style: TextStyle(
                           fontSize: ScreenUtil().setSp(11),
                           color: Colors.grey[600],
@@ -144,7 +148,7 @@ class GoodsItemPage extends StatelessWidget {
                       //商品数量
                       Container(
                         child: Text(
-                          "1",
+                          this.cartInfo.number.toString(),
                           style: TextStyle(
                             fontSize: ScreenUtil().setSp(16),
                             color: Colors.grey[700],
@@ -188,5 +192,4 @@ class GoodsItemPage extends StatelessWidget {
       ),
     );
   }
-
 }

@@ -41,3 +41,9 @@ app.*.map.json
 
 # Exceptions to above rules.
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
+lib/main.dart
+lib/main.dart
+lib/config/service_url.dart
+lib/pages/shopcart/goods_item_page.dart
+lib/pages/shopcart/goods_list_view_page.dart
+lib/provide/cart/cart_provide.dart
