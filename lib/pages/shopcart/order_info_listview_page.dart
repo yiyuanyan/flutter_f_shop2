@@ -19,7 +19,10 @@ class OrderInfoListViewPage extends StatelessWidget {
       itemCount: 9,
       // ignore: missing_return
       itemBuilder: (context, index){
-        return _orderItem(context, index);
+        return Container(
+          padding: EdgeInsets.all(5),
+          child: _orderItem(context, index),
+        );
       },
     );
   }
@@ -35,11 +38,50 @@ class OrderInfoListViewPage extends StatelessWidget {
           child: Row(
             children: <Widget>[
               Expanded(
-                flex: 1,
+                flex: 8,
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.only(top: ScreenUtil().setHeight(8)),
+                      child: Text(
+                        "北京市海淀区",
+                        style: TextStyle(
+                          fontSize: ScreenUtil().setSp(16),
+                          color: Colors.grey[600],
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: ScreenUtil().setHeight(8)),
+                      child: Text(
+                        "知春路碧兴园6号楼6层606号",
+                        style: TextStyle(
+                          fontSize: ScreenUtil().setSp(16),
+                          fontWeight: FontWeight.w700,
+                          color: Colors.grey[600],
+                        ),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: ScreenUtil().setHeight(8)),
+                      child: Text(
+                        "老何 13800138000",
+                        style: TextStyle(
+                          fontSize: ScreenUtil().setSp(16),
 
+                          color: Colors.grey[600],
+                        ),
+                      ),
+                    ),
                   ],
+                ),
+              ),
+              Expanded(
+                flex: 1,
+                child: Container(
+                  alignment: Alignment.center,
+                  child: Icon(Icons.chevron_right),
                 ),
               ),
             ],
