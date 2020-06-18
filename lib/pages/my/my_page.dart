@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutterfshop/pages/my/banner_page.dart';
+import 'package:flutterfshop/pages/my/my_service_page.dart';
 import 'package:flutterfshop/pages/my/order_center_page.dart';
 import 'package:flutterfshop/pages/my/user_info_page.dart';
 
@@ -28,6 +30,8 @@ class MyPage extends StatelessWidget {
           children: <Widget>[
             UserInfoPage(),
             OrderCenterPage(),
+            BannerPage(),
+            MyServicePage(),
           ],
         ),
       ),
