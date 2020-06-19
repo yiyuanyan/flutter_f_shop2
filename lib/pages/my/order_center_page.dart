@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutterfshop/routers/application.dart';
 
 class OrderCenterPage extends StatelessWidget {
   @override
@@ -15,7 +16,7 @@ class OrderCenterPage extends StatelessWidget {
       child: Column(
         children: <Widget>[
           //订单title
-          _orderTitle(),
+          _orderTitle(context),
           //分割线
           Container(
             width: ScreenUtil().setWidth(365),
@@ -31,7 +32,7 @@ class OrderCenterPage extends StatelessWidget {
   }
 
   //订单title
-  Widget _orderTitle(){
+  Widget _orderTitle(BuildContext context){
     return Container(
       alignment: Alignment.center,
       padding: EdgeInsets.only(left: ScreenUtil().setWidth(5), right: ScreenUtil().setWidth(5)),
@@ -50,6 +51,7 @@ class OrderCenterPage extends StatelessWidget {
           InkWell(
             onTap: (){
               print("点击了查看更多按钮");
+              Application.router.navigateTo(context, "/orderList?orderListKey=1");
             },
             child: Text(
               "查看更多 >",
