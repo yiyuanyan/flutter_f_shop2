@@ -29,6 +29,12 @@ class GoodsListViewPage extends StatelessWidget {
               );
             },
           );
+        }else{
+          return Container(
+            child: Center(
+              child: Text("正在加载中....",),
+            ),
+          );
         }
       },
     );
