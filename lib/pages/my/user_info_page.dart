@@ -1,61 +1,80 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutterfshop/config/service_url.dart';
+import 'package:flutterfshop/model/user_info_model.dart';
+import 'package:flutterfshop/provide/my/my_provide.dart';
+import 'package:provide/provide.dart';
 
 class UserInfoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: ScreenUtil().setHeight(190),
-      child: Stack(
-        //alignment: AlignmentDirectional.topCenter,
-        children: <Widget>[
-          Container(
-            width: ScreenUtil().setWidth(375),
-            color: Colors.redAccent,
-            height: ScreenUtil().setHeight(147),
-            child: Container(
-              margin: EdgeInsets.all(10),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  //用户头像
-                  _userHeader(),
-                  //用户名称
-                  Expanded(
-                    flex: 2,
-                    child: _userName(),
+    return FutureBuilder(
+      future: _getUserInfo(context, "1"),
+      builder: (context, snapshot){
+        if(snapshot.hasData){
+          return Container(
+            height: ScreenUtil().setHeight(190),
+            child: Stack(
+              //alignment: AlignmentDirectional.topCenter,
+              children: <Widget>[
+                Container(
+                  width: ScreenUtil().setWidth(375),
+                  color: Colors.redAccent,
+                  height: ScreenUtil().setHeight(147),
+                  child: Container(
+                    margin: EdgeInsets.all(10),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        //用户头像
+                        _userHeader(context),
+                        //用户名称
+                        Expanded(
+                          flex: 2,
+                          child: _userName(context),
+                        ),
+                        //邀请按钮
+                        _invitationBtn(),
+                      ],
+                    ),
                   ),
-                  //邀请按钮
-                  _invitationBtn(),
-                ],
-              ),
+                ),
+                Positioned(
+                  left: 0,
+                  bottom: 10,
+                  child: Container(
+                    margin: EdgeInsets.only(left: ScreenUtil().setWidth(5),right: ScreenUtil().setWidth(5)),
+                    width: ScreenUtil().setWidth(365),
+                    height: ScreenUtil().setHeight(80),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                    ),
+                    //用户状态
+                    child: _userStatus(context),
+                  ),
+                ),
+              ],
             ),
-          ),
-          Positioned(
-            left: 0,
-            bottom: 10,
-            child: Container(
-              margin: EdgeInsets.only(left: ScreenUtil().setWidth(5),right: ScreenUtil().setWidth(5)),
-              width: ScreenUtil().setWidth(365),
-              height: ScreenUtil().setHeight(80),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(5)),
-              ),
-              //用户状态
-              child: _userStatus(),
+          );
+        }else{
+          return Container(
+            child: Center(
+              child: Text("正在加载...."),
             ),
-          ),
-        ],
-      ),
+          );
+        }
+      },
     );
   }
 
   //用户头像
-  Widget _userHeader(){
+  Widget _userHeader(BuildContext context){
+    String userName = Provide.value<MyProvide>(context).data.userName;
+    String userImg = Provide.value<MyProvide>(context).data.userImg;
     return InkWell(
       onTap: (){
-        print("点击了头像");
+        print("点击了$userName的头像");
       },
       child: Container(
         width: ScreenUtil().setWidth(75),
@@ -65,7 +84,7 @@ class UserInfoPage extends StatelessWidget {
           borderRadius: BorderRadius.circular(37.0),
           image: DecorationImage(
             fit: BoxFit.fill,
-            image: AssetImage("assets/images/maill/u281.png"),
+            image: NetworkImage(fileURL + userImg),
           ),
         ),
       ),
@@ -73,21 +92,23 @@ class UserInfoPage extends StatelessWidget {
   }
 
   //用户名称
-  Widget _userName(){
+  Widget _userName(BuildContext context){
+    String userName = Provide.value<MyProvide>(context).data.userName;
+    String userID = Provide.value<MyProvide>(context).data.userId.toString();
     return Container(
       margin: EdgeInsets.only(left: ScreenUtil().setWidth(10), top: ScreenUtil().setHeight(28)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            "寒冰小贱贱",
+            userName,
             style: TextStyle(
               fontSize: ScreenUtil().setSp(14),
               color: Colors.white,
             ),
           ),
           Text(
-            "ID: 37507963",
+            "ID: " + userID,
             style: TextStyle(
               fontSize: ScreenUtil().setSp(14),
               color: Colors.white,
@@ -125,7 +146,8 @@ class UserInfoPage extends StatelessWidget {
   }
 
   //用户状态
-  Widget _userStatus(){
+  Widget _userStatus(BuildContext context){
+    Data userData = Provide.value<MyProvide>(context).data;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
@@ -139,7 +161,7 @@ class UserInfoPage extends StatelessWidget {
             children: <Widget>[
               Center(
                 child: Text(
-                  "￥3578.00",
+                  "￥"+userData.balance.toString(),
                   maxLines: 1,
                   overflow: TextOverflow.clip,
                   style: TextStyle(
@@ -176,7 +198,7 @@ class UserInfoPage extends StatelessWidget {
             children: <Widget>[
               Center(
                 child: Text(
-                  "￥300.00",
+                  "￥"+userData.redEnvelopes.toString(),
                   maxLines: 1,
                   overflow: TextOverflow.clip,
                   style: TextStyle(
@@ -213,7 +235,7 @@ class UserInfoPage extends StatelessWidget {
             children: <Widget>[
               Center(
                 child: Text(
-                  "3张",
+                  userData.coupon.toString() + "张",
                   maxLines: 1,
                   overflow: TextOverflow.clip,
                   style: TextStyle(
@@ -250,7 +272,7 @@ class UserInfoPage extends StatelessWidget {
             children: <Widget>[
               Center(
                 child: Text(
-                  "100分",
+                  userData.integral.toString() + "分",
                   maxLines: 1,
                   overflow: TextOverflow.clip,
                   style: TextStyle(
@@ -274,4 +296,11 @@ class UserInfoPage extends StatelessWidget {
       ],
     );
   }
+
+
+  Future<String> _getUserInfo(BuildContext context, String user_id) async{
+    await Provide.value<MyProvide>(context).getUserInfo(user_id);
+    return "OK";
+  }
+
 }

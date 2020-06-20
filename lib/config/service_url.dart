@@ -10,4 +10,5 @@ const servicePATH = {
   "getGoods": serviceURL + "/getGoods",  //商品列表
   "getGoodsInfo": serviceURL + "/getGoodsInfo",  //获取商品信息
   "getMyCartList": serviceURL + "/getMyCartList",  //获取购物车列表
+  "getUserInfo": serviceURL + "/getUserInfo", //获取用户信息
 };
