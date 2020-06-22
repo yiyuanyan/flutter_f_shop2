@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutterfshop/routers/application.dart';
 class MyServicePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class MyServicePage extends StatelessWidget {
       child: Column(
         children: <Widget>[
           _myServiceTitle(),
-          _myServiceGridView(),
+          _myServiceGridView(context),
         ],
       ),
     );
@@ -36,7 +37,7 @@ class MyServicePage extends StatelessWidget {
     );
   }
   //我的服务
-  Widget _myServiceGridView(){
+  Widget _myServiceGridView(BuildContext context){
     return GridView.count(
       physics: NeverScrollableScrollPhysics(),
       crossAxisCount: 3,
@@ -76,6 +77,7 @@ class MyServicePage extends StatelessWidget {
         ),
         InkWell(
           onTap: (){
+            Application.router.navigateTo(context, "/myAdd?user_id=1");
             print("点击了收货地址");
           },
           child: Container(

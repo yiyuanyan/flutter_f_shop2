@@ -8,6 +8,7 @@ import 'package:flutterfshop/provide/home/recommend_commodity_provide.dart';
 import 'package:flutterfshop/provide/mall/goods_provide.dart';
 import 'package:flutterfshop/provide/mall/mall_provide.dart';
 import 'package:flutterfshop/provide/my/my_provide.dart';
+import 'package:flutterfshop/provide/my/order_provide.dart';
 import 'provide/location/location_provide.dart';
 import 'package:provide/provide.dart';
 import 'package:fluro/fluro.dart';
@@ -31,6 +32,7 @@ void main(){
   var goodsInfoProvide = GoodsInfoProvide();
   var cartProvide = CartProvide();
   var myProvide = MyProvide();
+  var orderProvide = OrderProvide();
   var panicBuyProvide = PanicBuyProvide();
   
 
@@ -44,6 +46,7 @@ void main(){
   ..provide(Provider<GoodsInfoProvide>.value(goodsInfoProvide))
   ..provide(Provider<CartProvide>.value(cartProvide))
   ..provide(Provider<MyProvide>.value(myProvide))
+  ..provide(Provider<OrderProvide>.value(orderProvide))
   ..provide(Provider<HomeProvide>.value(homeProvide));
   runApp(ProviderNode(child: MyApp(), providers: providers));
 }

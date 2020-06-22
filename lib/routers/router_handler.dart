@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutterfshop/pages/mall/goods/goods_info.dart';
+import 'package:flutterfshop/pages/my/my_add_page.dart';
+import 'package:flutterfshop/pages/my/my_information_page.dart';
+import 'package:flutterfshop/pages/my/new_add_page.dart';
 import 'package:flutterfshop/pages/my/order_list_page.dart';
 import 'package:flutterfshop/pages/shopcart/order_info_page.dart';
 
@@ -50,5 +53,26 @@ var OrderListHandler = Handler(
   handlerFunc: (BuildContext context, Map<String, List<String>> params){
     String orderListKey = params["orderListKey"].first;
     return OrderListPage(orderListKey: orderListKey);
+  }
+);
+
+var MyAddHandler = Handler(
+  handlerFunc: (BuildContext context, Map<String, List<String>> params){
+    String user_id = params["user_id"].first;
+    return MyAddPage(user_id: user_id,);
+  }
+);
+
+var NewAddHandler = Handler(
+  handlerFunc: (BuildContext context, Map<String, List<String>> params){
+    String user_id = params["user_id"].first;
+    return NewAddPage(user_id: user_id,);
+  }
+);
+
+var MyInformationHandler = Handler(
+  handlerFunc: (BuildContext context, Map<String, List<String>> params){
+    String user_id = params["user_id"].first;
+    return MyInformationPage(user_id: user_id,);
   }
 );

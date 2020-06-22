@@ -19,17 +19,6 @@ class _LeftCategoryListWidgetState extends State<LeftCategoryListWidget>  {
   @override
   Widget build(BuildContext context) {
     categorysData = Provide.value<CategoryProvide>(context).categorysData;
-//    return Container(
-//      margin: EdgeInsets.only(top:ScreenUtil().setHeight(20)),
-//      width: ScreenUtil().setWidth(90),
-//      child: ListView.builder(
-//        itemCount: this.categorysData.length,
-//        primary:false,  //内容不足不滚动
-//        //padding: EdgeInsets.all(ScreenUtil().setWidth(5)),
-//        itemExtent: ScreenUtil().setHeight(54),
-//        itemBuilder: (context, index) => _getCategoryListItem(context, index),
-//      ),
-//    );
     return Provide<CategoryProvide>(
       builder: (context, child, currentCategoryID){
         return Container(
@@ -38,7 +27,6 @@ class _LeftCategoryListWidgetState extends State<LeftCategoryListWidget>  {
           child: ListView.builder(
             itemCount: this.categorysData.length,
             primary:false,  //内容不足不滚动
-            //padding: EdgeInsets.all(ScreenUtil().setWidth(5)),
             itemExtent: ScreenUtil().setHeight(54),
             itemBuilder: (context, index) => _getCategoryListItem(context, index),
           ),

@@ -6,22 +6,14 @@ import 'package:flutterfshop/model/order_model.dart';
 import 'package:flutterfshop/provide/my/order_provide.dart';
 import 'package:flutterfshop/routers/application.dart';
 import 'package:provide/provide.dart';
-
-
-
-class OrderListPage extends StatefulWidget {
+class OrderListPage extends StatelessWidget {
   final String orderListKey;
 
   const OrderListPage({Key key, this.orderListKey}) : super(key: key);
 
   @override
-  _OrderListPageState createState() => _OrderListPageState();
-}
-class _OrderListPageState extends State<OrderListPage> {
-  List<OrderList> orderList;
-  @override
   Widget build(BuildContext context) {
-    orderList = Provide.value<OrderProvide>(context).orderList;
+    List<OrderList> orderList = Provide.value<OrderProvide>(context).orderList;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -47,7 +39,7 @@ class _OrderListPageState extends State<OrderListPage> {
         // ignore: missing_return
         builder: (BuildContext context, snapshot){
           if(snapshot.hasData){
-            return _orderListView(context);
+            return _orderListView(context, orderList);
           }else{
             return Center(
               child: Text("正在加载......"),
@@ -58,8 +50,7 @@ class _OrderListPageState extends State<OrderListPage> {
     );
   }
   //订单列表
-  Widget _orderListView(BuildContext context){
-    List<OrderList> orderList = Provide.value<OrderProvide>(context).orderList;
+  Widget _orderListView(BuildContext context,List<OrderList> orderList){
     return Container(
       color: Colors.white,
       padding: EdgeInsets.all(ScreenUtil().setWidth(5)),
@@ -74,28 +65,24 @@ class _OrderListPageState extends State<OrderListPage> {
   //订单分类
   Widget _orderCartgory(BuildContext context){
     List<OrderCategory> orderCategory = Provide.value<OrderProvide>(context).orderCategory;
-    return Provide<OrderProvide>(
-      builder: (context, child, cateogryId){
-        return Container(
-          height: ScreenUtil().setHeight(36),
-          child: Stack(
-            children: <Widget>[
-              GridView.count(
-                crossAxisCount: orderCategory.length,
-                crossAxisSpacing: ScreenUtil().setWidth(10),
-                childAspectRatio: 2.0,
-                shrinkWrap: true,
-                children: getOrderTitle(context, orderCategory),
-              ),
-              Container(
-                margin: EdgeInsets.only(top: ScreenUtil().setHeight(33)),
-                height: ScreenUtil().setHeight(1),
-                color: Colors.grey[300],
-              ),
-            ],
+    return Container(
+      height: ScreenUtil().setHeight(36),
+      child: Stack(
+        children: <Widget>[
+          GridView.count(
+            crossAxisCount: 5,
+            crossAxisSpacing: ScreenUtil().setWidth(10),
+            childAspectRatio: 2.0,
+            shrinkWrap: true,
+            children: getOrderTitle(context, orderCategory),
           ),
-        );
-      },
+          Container(
+            margin: EdgeInsets.only(top: ScreenUtil().setHeight(33)),
+            height: ScreenUtil().setHeight(1),
+            color: Colors.grey[300],
+          ),
+        ],
+      ),
     );
   }
   List<Widget> getOrderTitle(BuildContext context,List<OrderCategory> orderCategory){
@@ -107,14 +94,11 @@ class _OrderListPageState extends State<OrderListPage> {
   }
   //订单类型分类title
   Widget _orderCategoryTitle(BuildContext context,String title, int cat_id){
-
     int currentCategory = Provide.value<OrderProvide>(context).currentCategory;
-    Color bottomColors;
     return InkWell(
       onTap: (){
         Provide.value<OrderProvide>(context).changeCategory(cat_id);
         currentCategory = Provide.value<OrderProvide>(context).currentCategory;
-        Provide.value<OrderProvide>(context).getOrderListByCategory(currentCategory.toString(), "1");
         print("$currentCategory================================$cat_id");
       },
       child: Column(
@@ -134,8 +118,7 @@ class _OrderListPageState extends State<OrderListPage> {
 
           Container(
             height: ScreenUtil().setHeight(2),
-            //color: bottomColors,
-            color: currentCategory == cat_id ? Colors.green : Colors.white,
+            color: cat_id == currentCategory ? Colors.green : Colors.white,
           ),
         ],
       ),
@@ -432,11 +415,5 @@ class _OrderListPageState extends State<OrderListPage> {
     await Provide.value<OrderProvide>(context).getOrderCategory(user_id);
     await Provide.value<OrderProvide>(context).getOrderListByCategory(cate_id, user_id);
     return "OK";
-  }
-
-  @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    throw UnimplementedError();
   }
 }

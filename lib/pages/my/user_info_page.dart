@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutterfshop/config/service_url.dart';
 import 'package:flutterfshop/model/user_info_model.dart';
 import 'package:flutterfshop/provide/my/my_provide.dart';
+import 'package:flutterfshop/routers/application.dart';
 import 'package:provide/provide.dart';
 
 class UserInfoPage extends StatelessWidget {
@@ -74,6 +75,7 @@ class UserInfoPage extends StatelessWidget {
     String userImg = Provide.value<MyProvide>(context).data.userImg;
     return InkWell(
       onTap: (){
+        Application.router.navigateTo(context, "/myInformation?user_id=1");
         print("点击了$userName的头像");
       },
       child: Container(

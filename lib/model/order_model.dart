@@ -47,6 +47,7 @@ class OrderCategory {
   }
 }
 
+
 class OrderListModel {
   int code;
   String message;
@@ -79,16 +80,18 @@ class OrderListModel {
 class OrderList {
   int id;
   int orderNumber;
+  String image;
   int type;
   String title;
   String specifications;
-  int price;
-  int oldPrice;
+  String price;
+  String oldPrice;
   int goodsNumber;
 
   OrderList(
       {this.id,
         this.orderNumber,
+        this.image,
         this.type,
         this.title,
         this.specifications,
@@ -99,6 +102,7 @@ class OrderList {
   OrderList.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     orderNumber = json['order_number'];
+    image = json['image'];
     type = json['type'];
     title = json['title'];
     specifications = json['specifications'];
@@ -111,6 +115,7 @@ class OrderList {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['order_number'] = this.orderNumber;
+    data['image'] = this.image;
     data['type'] = this.type;
     data['title'] = this.title;
     data['specifications'] = this.specifications;
