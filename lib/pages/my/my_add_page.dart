@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutterfshop/provide/my/my_add_provide.dart';
 import 'package:flutterfshop/routers/application.dart';
+import 'package:provide/provide.dart';
+import '../../model/my_add_model.dart';
 
 class MyAddPage extends StatelessWidget {
   final String user_id;
@@ -29,7 +32,21 @@ class MyAddPage extends StatelessWidget {
           ),
         ),
       ),
-      body: _getAddListView(context),
+      body: FutureBuilder(
+        future: _getMyAddList(context, user_id),
+        builder: (BuildContext context, snapshot){
+
+          if(snapshot.data == "OK"){
+            return _getAddListView(context);
+          }else{
+            return Container(
+              child: Center(
+                child: Text("正在加载......"),
+              ),
+            );
+          }
+        },
+      ),
     );
   }
   Widget _getAddListView(BuildContext context){
@@ -57,6 +74,7 @@ class MyAddPage extends StatelessWidget {
     );
   }
   Widget addItems(BuildContext context, int index){
+    List<AddList> addList = Provide.value<MyAddProvide>(context).addList;
     return Column(
       children: <Widget>[
         Container(
@@ -73,7 +91,7 @@ class MyAddPage extends StatelessWidget {
                 child: Row(
                   children: <Widget>[
                     Text(
-                      "寒冰小贱贱",
+                      addList[index].name.toString(),
                       style: TextStyle(
                         fontSize: ScreenUtil().setSp(18),
                         fontWeight: FontWeight.w400,
@@ -82,7 +100,7 @@ class MyAddPage extends StatelessWidget {
                     ),
                     Container(width: ScreenUtil().setWidth(30),),
                     Text(
-                      "13800138000",
+                      addList[index].phone.toString(),
                       style: TextStyle(
                         fontSize: ScreenUtil().setSp(18),
                         fontWeight: FontWeight.w400,
@@ -98,7 +116,7 @@ class MyAddPage extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 width: ScreenUtil().setWidth(280),
                 child: Text(
-                  "收货地址： 北京市海淀区知春路罗庄西里碧兴园3楼3333室",
+                  "收货地址： " + addList[index].address.toString(),
                   maxLines: 2,
                   style: TextStyle(
                     fontSize: ScreenUtil().setSp(14),
@@ -113,7 +131,8 @@ class MyAddPage extends StatelessWidget {
                 child: Row(
                   children: <Widget>[
                     Checkbox(
-                      value: index == 1 ? true : false,
+                      value: addList[index].isDefault.toInt() == 1 ? true : false,
+                      //value: index == 1 ? true : false,
                     ),
                     Text(
                       "设为默认地址",
@@ -171,5 +190,16 @@ class MyAddPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<String> _getMyAddList(BuildContext context, String user_id) async{
+    await Provide.value<MyAddProvide>(context).getMyAddList(user_id);
+    int code = Provide.value<MyAddProvide>(context).code;
+    if(code == 200){
+      return "OK";
+    }else{
+      return "false";
+    }
+
   }
 }

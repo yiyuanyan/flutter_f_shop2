@@ -70,7 +70,7 @@ class MessageCenterWidget extends StatelessWidget {
           title: Row(
             children: <Widget>[
               Container(
-                width: ScreenUtil().setWidth(200),
+                width: ScreenUtil().setWidth(148),
                 child: Text(
                   systemNotification[i].title,
                   maxLines: 1,
@@ -107,7 +107,7 @@ class MessageCenterWidget extends StatelessWidget {
           title: Row(
             children: <Widget>[
               Container(
-                width: ScreenUtil().setWidth(200),
+                width: ScreenUtil().setWidth(158),
                 child: Text(
                   normalNotification[j].title,
                   maxLines: 1,

@@ -13,4 +13,5 @@ const servicePATH = {
   "getUserInfo": serviceURL + "/getUserInfo", //获取用户信息
   "getOrderCategory": serviceURL + "/getOrderCategory", //订单中心分类
   "getOrderListByCategory": serviceURL + "/getOrderListByCategory", //按照订单分类获取订单列表
+  "getMyAddList": serviceURL + "/getMyAddList", //用户收货地址列表
 };

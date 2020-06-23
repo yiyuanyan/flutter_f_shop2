@@ -134,6 +134,7 @@ class MyServicePage extends StatelessWidget {
         ),
         InkWell(
           onTap: (){
+            Application.router.navigateTo(context, "/messagecenter?userId=888");
             print("点击了消息中心");
           },
           child: Container(
